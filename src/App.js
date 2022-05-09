@@ -13,15 +13,14 @@ function App() {
   //This const keeps track of edited text
   const [editingText, setEditingText] = React.useState("")
 
+  //Pulls the local storage
+  const temp = localStorage.getItem("todos")
+  const loadedTodos = JSON.parse(temp)
   
-  //This function loads the todos onto the page
+  //Shows the user the todos
   React.useEffect(() => {
-    const temp = localStorage.getItem("todos")
-    const loadedTodos = JSON.parse(temp)
-    
     setTodos(loadedTodos)
-
-  }, []) 
+  }, [])
 
   //This function allows for the local storage of todos
   React.useEffect(() => {
