@@ -13,21 +13,22 @@ function App() {
   //This const keeps track of edited text
   const [editingText, setEditingText] = React.useState("")
 
+  
   //This function loads the todos onto the page
   React.useEffect(() => {
     const temp = localStorage.getItem("todos")
     const loadedTodos = JSON.parse(temp)
-    if (loadedTodos) {
-      setTodos(loadedTodos)
-    }
-  }, [])
+    
+    setTodos(loadedTodos)
+
+  }, []) 
 
   //This function allows for the local storage of todos
   React.useEffect(() => {
     const temp = JSON.stringify(todos)
     localStorage.setItem("todos", temp)
   }, [todos])
-
+  
   //This function is for adding todos (hence handleSubmit as it handles the user input)
   function handleSubmit(e) {
     //This prevents the webpage from reloading whenever the "Add Todo" button is pushed
@@ -44,6 +45,7 @@ function App() {
 
     //This line resets the text box to be empty
     setTodo("")
+
   }
 
   //The purpose of this function is to toggle variable of whether the todo is completed or not
