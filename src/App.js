@@ -48,7 +48,11 @@ function App() {
       completed: false,
     }
 
-    setTodos([...todos].concat(newTodo)) //what is is ... do, not clear
+    if (newTodo) {
+	    setTodos([...todos].concat(newTodo)) //what is is ... do, not clear
+    } else {
+	    //throw some error
+    }
 
     //This line resets the text box to be empty 
     //which text box??????
