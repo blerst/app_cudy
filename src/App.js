@@ -4,6 +4,7 @@ import './App.css';
 //Whenever you see <div>, I have commented around them the features about the div because you can't comment in a div.
 
 function App() {
+
   //This const is creating the hook that will be used for the todos. The useState will give us the ability to create the todo array
   const [todos, setTodos] = React.useState([])
   //This const exists as the temp variable for todos that are added before saved in a file.
@@ -111,18 +112,23 @@ function App() {
     todoEditing === todo.id ? represents conditional rendering where whichever todo is being edited, it will display a box for input
     otherwise it will remain the same essentially it exist to choose which boxes the user needs to see
     */
+
     <div className="App">
+
+      <h1>What's on your mind?</h1>
+
       <form onSubmit={handleSubmit}>
 
         <input 
           type="text" 
           onChange={(e) => setTodo(e.target.value)} 
-          value={todo}/>
+          value={todo}
+          className="inputTodo"/>
 
-        <button type="submit">Add Todo</button>
+        <button type="submit" className="addTodo">Add Todo</button>
       </form>
-
-      {todos.map((todo) => <div key={todo.id}>
+      
+        {todos.map((todo) => <div key={todo.id}>
         
         {todoEditing === todo.id ? 
         (<input 
