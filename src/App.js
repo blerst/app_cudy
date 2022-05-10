@@ -41,7 +41,9 @@ function App() {
       completed: false,
     }
 
-    setTodos([...todos].concat(newTodo))
+    if (todo) {
+      setTodos([...todos].concat(newTodo))
+    }
 
     //This line resets the text box to be empty
     setTodo("")
@@ -137,19 +139,20 @@ function App() {
           value={editingText} 
         />) 
           :
-          (<div>{todo.text}</div>)}
+          (<div className="todoText">{todo.text}</div>)}
         
 
-        <button onClick={() => deleteTodo(todo.id)}>Delete</button>
-
+        <button className="delButton" onClick={() => deleteTodo(todo.id)}>Delete</button>
+        
         <input 
-          type="checkbox" 
+          type="checkbox"
+          className="isComplete" 
           onChange ={() => toggleComplete(todo.id)}
           checked={todo.completed} />
 
         {todoEditing === todo.id ? 
-        (<button onClick={() => editTodo(todo.id)}>Complete Edit</button>) : 
-        (<button onClick={() => setTodoEditing(todo.id)}>Edit Todo</button>)}
+        (<button className="editTodo" onClick={() => editTodo(todo.id)}>Complete Edit</button>) : 
+        (<button className="editTodo" onClick={() => setTodoEditing(todo.id)}>Edit Todo</button>)}
 
       </div>)}
     </div>
