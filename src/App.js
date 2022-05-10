@@ -68,7 +68,7 @@ function App() {
 
   //This function will be used to edit the todo file once changes have been made by the user
   function editTodo(id) {
-    
+  
     //If the edited todoid matches the id in the file, change the file to match todo
     const updateTodos = [... todos].map((todo) => {
       if (todo.id === id) {
@@ -152,7 +152,7 @@ function App() {
 
         {todoEditing === todo.id ? 
         (<button className="editTodo" onClick={() => editTodo(todo.id)}>Complete Edit</button>) : 
-        (<button className="editTodo" onClick={() => setTodoEditing(todo.id)}>Edit Todo</button>)}
+        (<button className="editTodo" onClick={() => setTodoEditing(todo.id)}>Edit</button>)}
 
       </div>)}
     </div>
