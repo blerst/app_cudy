@@ -3,28 +3,35 @@ import './App.css';
 
 //Whenever you see <div>, I have commented around them the features about the div because you can't comment in a div.
 
+//What does this function do, can we get a description please
 function App() {
+  //WHAT ON EARTH IS A HOOK AND WHERE IS IT HOOKING FROM??????
+
   //This const is creating the hook that will be used for the todos. The useState will give us the ability to create the todo array
   const [todos, setTodos] = React.useState([])
+
   //This const exists as the temp variable for todos that are added before saved in a file.
   const [todo, setTodo] = React.useState("")
+
   //This const exists to add a hook for todo editing. 
   const [todoEditing, setTodoEditing] = React.useState(null)
+
   //This const keeps track of edited text
   const [editingText, setEditingText] = React.useState("")
 
-  //Pulls the local storage
-  const temp = localStorage.getItem("todos")
-  const loadedTodos = JSON.parse(temp)
+  //Pulls the local storage of the todo lists
+  const temp = localStorage.getItem("todos")//is todos a file or an element in a file
+  const loadedTodos = JSON.parse(temp) //what is it parsing for
   
+  //the comment below it terrible, what is useEffect?
   //Shows the user the todos
   React.useEffect(() => {
-    setTodos(loadedTodos)
+    setTodos(loadedTodos) //since setTodos isn't code I can look at you should put a description here
   }, [])
 
   //This function allows for the local storage of todos
   React.useEffect(() => {
-    const temp = JSON.stringify(todos)
+    const temp = JSON.stringify(todos) //if this doesn't encode the object todos as a string it needs a comment
     localStorage.setItem("todos", temp)
   }, [todos])
   
@@ -34,20 +41,23 @@ function App() {
     e.preventDefault()
     
     //This is how the todos will be stored
+    //sir may or may not know what objects are or how they work
     const newTodo = {
       id: Date.now(),
       text: todo,
       completed: false,
     }
 
-    setTodos([...todos].concat(newTodo))
+    setTodos([...todos].concat(newTodo)) //what is is ... do, not clear
 
-    //This line resets the text box to be empty
+    //This line resets the text box to be empty 
+    //which text box??????
     setTodo("")
 
   }
 
   //The purpose of this function is to toggle variable of whether the todo is completed or not
+  //I assume this is refering to the little check box but atm it sounds like some internal global variable
   function toggleComplete(id) {
     const updateTodo = [...todos].map((todo) => {
       //If the checkbox is changed, change the value to the opposite of what it is (in the variable)
@@ -65,7 +75,10 @@ function App() {
 
   //This function will be used to edit the todo file once changes have been made by the user
   function editTodo(id) {
-    
+    //i don't understand any of this function
+    //you should probably do a pascal style global variable declaration so sir can see whats what
+
+
     //If the edited todoid matches the id in the file, change the file to match todo
     const updateTodos = [... todos].map((todo) => {
       if (todo.id === id) {
@@ -93,6 +106,11 @@ function App() {
   
 
   return (
+
+    //You need a line or two explaining what is below, it looks like HTML but its not ordinary HTML so you better do some explaining
+
+
+   
     /*
     The form of this div is where all the elements shown to the user are stored
 
@@ -149,4 +167,4 @@ function App() {
     </div>
   );
   }
-export default App;
+export default App; //what does this do
