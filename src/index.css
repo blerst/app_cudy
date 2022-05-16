@@ -33,8 +33,8 @@ h1 {
 }
 
 .completed {
+  opacity: 0.7;
   text-decoration: line-through;
-  opacity: 0.4;
 }
 
 .inputTodo {
@@ -98,6 +98,7 @@ h1 {
 
 .todoText {
   display: flex;
+  text-align: center;
   justify-content: space-between;
   align-items: center;
   margin: 24px auto;
@@ -112,22 +113,6 @@ h1 {
   padding: 12px;
   border-radius: 5px;
   width: 50%;
-}
-
-.todo-row:nth-child(4n + 1) {
-  background: linear-gradient(
-    90deg,
-    rgba(93, 12, 255, 1) 0%,
-    rgba(155, 0, 250, 1) 100%
-  );
-}
-
-.todo-row:nth-child(4n + 2) {
-  background: linear-gradient(
-    90deg,
-    rgba(255, 12, 241, 1) 0%,
-    rgba(250, 0, 135, 1) 100%
-  );
 }
 
 .todo-row:nth-child(4n + 3) {
