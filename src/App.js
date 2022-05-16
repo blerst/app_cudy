@@ -68,8 +68,7 @@ function App() {
 
   }
 
-  delta_ms = laterDate.UTC() - earlierDate.UTC();
-  delta_days = Math.round(delta_ms / (1000 * 60 * 60 * 24));
+
 
   //This function will be used to edit the todo file once changes have been made by the user
   function editTodo(id) {
@@ -85,7 +84,6 @@ function App() {
     setTodoEditing(null)
     setEditingText("")
   }
-
 
   //The purpose of this function is to delete todos
   function deleteTodo(id) {
