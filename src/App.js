@@ -73,17 +73,19 @@ function App() {
 
   //This function will be used to edit the todo file once changes have been made by the user
   function editTodo(id) {
-  
     //If the edited todoid matches the id in the file, change the file to match todo
     const updateTodos = [... todos].map((todo) => {
-      if (todo.id === id) {
-        todo.text = editingText
+      if (editingText) {
+        if (todo.id === id) {
+          todo.text = editingText
+        }
       }
       return todo
     })
-    setTodos(updateTodos)
-    setTodoEditing(null)
-    setEditingText("")
+
+      setTodos(updateTodos)
+      setTodoEditing(null)
+      setEditingText("")
   }
 
   //The purpose of this function is to delete todos
