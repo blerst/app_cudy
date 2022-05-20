@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import img1 from './images/cudy1.png';
 
 //Whenever you see <div>, I have commented around them the features about the div because you can't comment in a div.
 
@@ -99,6 +100,8 @@ function App() {
   
 
   return (
+
+    
     /*
     The form of this div is where all the elements shown to the user are stored
 
@@ -117,11 +120,9 @@ function App() {
     todoEditing === todo.id ? represents conditional rendering where whichever todo is being edited, it will display a box for input
     otherwise it will remain the same essentially it exist to choose which boxes the user needs to see
     */
-
-
     <div className="App">
 
-      <h1>What's on your mind?</h1>
+      <img src={img1} alt=''/>
 
       <form onSubmit={handleSubmit}>
 
