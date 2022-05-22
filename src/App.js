@@ -144,6 +144,7 @@ function App() {
         {todoEditing === todo.id ? 
         (<input 
           type="text" 
+          placeholder={todo.text}
           onChange={(e) => setEditingText(e.target.value)} 
           value={editingText} 
         />) 
