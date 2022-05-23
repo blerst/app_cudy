@@ -50,7 +50,7 @@ function App() {
       completed: false,
     }
 
-    //This code stores the todo in file. The .concat allows for a format to be maintained in saving
+    //This code stores the todo in file. The .concat allows for the new todo object to be added to the end of the file.
     if (todo) {
       setTodos([...todos].concat(newTodo))
     }
@@ -149,13 +149,18 @@ function App() {
           (<div className="todoText">{todo.text}</div>)}
         
 
-        <button className="delButton" onClick={() => deleteTodo(todo.id)}>Delete</button>
+        {todoEditing === todo.id ?
+        (console.log):
+        (<button className="delButton" onClick={() => deleteTodo(todo.id)}>Delete</button>)}
         
-        <input 
+        {todoEditing === todo.id ?
+        (console.log) :
+        (<input 
           type="checkbox"
           className="isComplete" 
           onChange ={() => toggleComplete(todo.id)}
-          checked={todo.completed} />
+          checked={todo.completed} />)}
+
 
         {todoEditing === todo.id ? 
         (<button className="editTodo" onClick={() => editTodo(todo.id)}>Complete Edit</button>) : 
@@ -190,7 +195,7 @@ function App() {
     toggleComplete function, changing the todo file for whether a todo is completed or not completed
 
   {todoEditing === todo.id ? 
-  - This code acts as a if statement of whether a 'edit todo' button should be shown or 'complete todo' button.
+  - This code acts as a if statement of whether a 'edit todo' button should be shown or 'complete todo' button. It also hides the checkbox and delete todo button if being edited
 
   <button className="delButton"
   - This button deletes a todo by calling the deleteTodo function, passing the todo.id so that the function knows which todo to delete from file

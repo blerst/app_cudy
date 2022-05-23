@@ -45,6 +45,7 @@ img {
   width: 320px;
   background: transparent;
   color: #fff;
+  margin-bottom: 10px;
 }
 
 .addTodo {
