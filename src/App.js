@@ -163,7 +163,7 @@ function App() {
 
 
         {todoEditing === todo.id ? 
-        (<button className="editTodo" onClick={() => editTodo(todo.id)}>Complete Edit</button>) : 
+        (<button className="completeEdit" onClick={() => editTodo(todo.id)}>Complete Edit</button>) : 
         (<button className="editTodo" onClick={() => setTodoEditing(todo.id)}>Edit</button>)}
 
       </div>)}
