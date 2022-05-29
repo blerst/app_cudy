@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 import img1 from './images/cudy1.png';
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 //Whenever you see <div>, I have commented around them the features about the div because you can't comment in a div.
 
@@ -25,6 +27,10 @@ function App() {
 
   //This is parsed into javascript from json which is how the todo file is stored and puts it into loadedTodos
   const loadedTodos = JSON.parse(temp)
+
+  const current = new Date()
+
+  const today_date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
   
   //Shows the user the todos upon reload of the page
   React.useEffect(() => {
@@ -42,12 +48,13 @@ function App() {
 
     //Stops the page from reloading every time a todo is added
     e.preventDefault()
-    
+
     //This is how the todos will be stored. This is called an "object" and acts like a record
     const newTodo = {
       id: Date.now(),
       text: todo,
       completed: false,
+      due_date: selectedDate
     }
 
     //This code stores the todo in file. The .concat allows for the new todo object to be added to the end of the file.
@@ -57,6 +64,8 @@ function App() {
 
     //This line resets the text box to be empty once a todo is added
     setTodo("")
+
+    setSelectedDate("")
 
   }
 
@@ -116,11 +125,15 @@ function App() {
 
     }
 
+  const [selectedDate, setSelectedDate] = React.useState(null)
+
   return (
 
     <div className="App">
 
       <img src={img1} alt=''/>
+
+      <h4>The date today is <b>{today_date}</b></h4>
 
       <form onSubmit={handleSubmit}>
 
@@ -131,10 +144,19 @@ function App() {
           placeholder='What do you need to do?'
           className="inputTodo"/>
 
+        <DatePicker 
+        className='dateChoose'
+        placeholderText='Enter a date'
+        selected={selectedDate} 
+        onChange={date => setSelectedDate(date)} 
+        />
+
         <button type="submit" className="addTodo">Add Todo</button>
       </form>
+
+      <p></p>
       
-        {todos.map((todo) => 
+        {todos.map((todo) =>
         <div className={todo.completed ? 'completed' : ''}
         key={todo.id}>
         
@@ -148,11 +170,6 @@ function App() {
           :
           (<div className="todoText">{todo.text}</div>)}
         
-
-        {todoEditing === todo.id ?
-        (console.log):
-        (<button className="delButton" onClick={() => deleteTodo(todo.id)}>Delete</button>)}
-        
         {todoEditing === todo.id ?
         (console.log) :
         (<input 
@@ -161,10 +178,15 @@ function App() {
           onChange ={() => toggleComplete(todo.id)}
           checked={todo.completed} />)}
 
+        {todoEditing === todo.id ?
+        (console.log):
+        (<button className="delButton" onClick={() => deleteTodo(todo.id)}>Delete</button>)}
 
         {todoEditing === todo.id ? 
         (<button className="completeEdit" onClick={() => editTodo(todo.id)}>Complete Edit</button>) : 
         (<button className="editTodo" onClick={() => setTodoEditing(todo.id)}>Edit</button>)}
+
+
 
       </div>)}
     </div>
