@@ -30,8 +30,12 @@ function App() {
 
   const current = new Date()
 
-  const today_date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
-  
+  const today_date = `${current.getFullYear()}/${current.getMonth()+1}/${current.getDate()}`;
+
+  const [selectedDate, setSelectedDate] = React.useState(null)
+
+  const [editSelectedDate, editSetSelectedDate] = React.useState(null)
+
   //Shows the user the todos upon reload of the page
   React.useEffect(() => {
     setTodos(loadedTodos)
@@ -49,12 +53,21 @@ function App() {
     //Stops the page from reloading every time a todo is added
     e.preventDefault()
 
+    //This function will remove the fluff that comes with the selectedDate function
+    if (selectedDate) {
+      var dueDate = selectedDate.toString()
+      dueDate = dueDate.replace("00:00:00 GMT+1000 (Australian Eastern Standard Time)","")
+    } else {
+      dueDate = "No due date"
+    }
+
     //This is how the todos will be stored. This is called an "object" and acts like a record
     const newTodo = {
       id: Date.now(),
-      text: todo,
+      text: todo + " | " + dueDate,
       completed: false,
-      due_date: selectedDate
+      editText: todo,
+      editDate: dueDate,
     }
 
     //This code stores the todo in file. The .concat allows for the new todo object to be added to the end of the file.
@@ -71,7 +84,7 @@ function App() {
 
   //The purpose of this function is to toggle the 'complete' variable and determine whether the todo is completed or not
   function toggleComplete(id) {
-
+  
     //Update todo will access the todo file and with the arrow function (=>) (which can be thought of as a "I've opened the file, what do you want to do with it")
     const updateTodo = [...todos].map((todo) => {
 
@@ -94,14 +107,33 @@ function App() {
 
     //Const exists to access the todo file and update it with the edited changes
     const updateTodos = [... todos].map((todo) => {
-      
+
       //This if statement checks whether there is any edit in the edit todo textbox. If there is not, there will be no change
-      if (editingText) {
-        
-        //If the edited todoid matches the id in the file, change the file to match todo
+      
+      if (editingText && editSelectedDate) {
         if (todo.id === id) {
-          todo.text = editingText
+          var dueDate1 = editSelectedDate.toString()
+          dueDate1 = dueDate1.replace("00:00:00 GMT+1000 (Australian Eastern Standard Time)","")
+          var modTodo1 = editingText + " | " + dueDate1
+          todo.text = modTodo1
         }
+
+      } else if (editingText) {
+          if (todo.id === id) {
+            var tempTodo1 = todo.text
+            var todoDate = tempTodo1.substring(tempTodo1.indexOf("|"));
+            var modTodo2 = editingText + " " + todoDate
+            todo.text = modTodo2
+          }
+      } else if (editSelectedDate) {
+          if (todo.id === id) {
+            var tempTodo = todo.text
+            var tempText = tempTodo.substring(0, tempTodo.indexOf('|'));
+            var dueDate2 = editSelectedDate.toString()
+            dueDate2 = dueDate2.replace("00:00:00 GMT+1000 (Australian Eastern Standard Time)","")
+            var modTodo3 = tempText + " | " + dueDate2
+            todo.text = modTodo3
+          }
       }
 
       //Return all changes to system (Kind of like pushing with git to github)
@@ -112,6 +144,7 @@ function App() {
       setTodos(updateTodos)
       setTodoEditing(null)
       setEditingText("")
+      editSetSelectedDate("")
   }
 
   //The purpose of this function is to delete todos
@@ -124,8 +157,6 @@ function App() {
     setTodos(updateTodo)
 
     }
-
-  const [selectedDate, setSelectedDate] = React.useState(null)
 
   return (
 
@@ -153,8 +184,6 @@ function App() {
 
         <button type="submit" className="addTodo">Add Todo</button>
       </form>
-
-      <p></p>
       
         {todos.map((todo) =>
         <div className={todo.completed ? 'completed' : ''}
@@ -166,9 +195,19 @@ function App() {
           placeholder={todo.text}
           onChange={(e) => setEditingText(e.target.value)} 
           value={editingText} 
-        />) 
+        />
+        ) 
           :
           (<div className="todoText">{todo.text}</div>)}
+
+        {todoEditing === todo.id ? 
+        (<DatePicker
+        placeholderText='Enter a date'
+        selected={editSelectedDate} 
+        onChange={date => editSetSelectedDate(date)} 
+        />)
+        :
+        (console.log())}
         
         {todoEditing === todo.id ?
         (console.log) :
@@ -185,8 +224,6 @@ function App() {
         {todoEditing === todo.id ? 
         (<button className="completeEdit" onClick={() => editTodo(todo.id)}>Complete Edit</button>) : 
         (<button className="editTodo" onClick={() => setTodoEditing(todo.id)}>Edit</button>)}
-
-
 
       </div>)}
     </div>
