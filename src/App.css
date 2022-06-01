@@ -37,6 +37,10 @@ b {
   text-align: center;
 }
 
+.dateEdit {
+  width: 90px;
+}
+
 .App {
   display: flex;
   flex-direction: column;
@@ -53,11 +57,6 @@ b {
 img {
   margin: 5px auto;
   max-height: 200px;
-}
-
-.completed {
-  opacity: 0.7;
-  text-decoration: line-through;
 }
 
 .inputTodo {
@@ -86,11 +85,10 @@ img {
   text-transform: capitalize;
 }
 
-.delButton {
-  margin-top: 10px;
-  margin-right: 5px;
-  margin-bottom: 20px;
-  margin-left: 100px;
+.delEdit {
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
   padding: 6px;
   font-size: 12px;
   border: none;
@@ -104,27 +102,12 @@ img {
   color: #fff;
 }
 
-.editTodo {
-  margin-left: 5px;
-  padding: 6px;
-  font-size: 12px;
-  border: none;
-  border-radius: 4px 4px 4px 4px;
-  cursor: pointer;
-  outline: none;
-  background: linear-gradient(
-    rgba(93, 12, 255, 1) 0%,
-    rgba(155, 0, 250, 1) 100%
-  );
-  color: #fff;
-  text-transform: capitalize;
-}
 .isComplete {
   width: 15px;
   height: 15px;
 }
 
-.todoText {
+.overdueText {
   display: flex;
   text-align: center;
   justify-content: space-between;
@@ -138,13 +121,36 @@ img {
   );
 
   padding: 12px;
-  border-radius: 5px;
-  width: 50%;
+  border-radius: 10px;
+  width: 70%;
+}
+
+.ontimeText {
+  display: flex;
+  text-align: center;
+  justify-content: space-between;
+  align-items: center;
+  margin: 24px auto;
+  margin-bottom: 1px;
+  color: #fff;
+  background: linear-gradient(
+    rgb(20, 137, 255) 0%,
+    rgb(17, 223, 255) 100%
+  );
+
+  padding: 12px;
+  border-radius: 10px;
+  width: 70%;
+}
+
+.todoEditText {
+  width: 10%;
 }
 
 .completeEdit {
   margin-top: 20px;
   margin-left: 5px;
+  margin-bottom: 20px;
   padding: 8px;
   border: none;
   border-radius: 4px 4px 4px 4px;

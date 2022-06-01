@@ -46,7 +46,7 @@ function App() {
     const temp = JSON.stringify(todos)
     localStorage.setItem("todos", temp)
   }, [todos])
-  
+
   //This function is for adding todos and is triggered by the "add todo" button
   function handleSubmit(e) {
 
@@ -65,9 +65,8 @@ function App() {
     const newTodo = {
       id: Date.now(),
       text: todo + " | " + dueDate,
-      completed: false,
       editText: todo,
-      editDate: dueDate,
+      overdue: true,
     }
 
     //This code stores the todo in file. The .concat allows for the new todo object to be added to the end of the file.
@@ -79,26 +78,6 @@ function App() {
     setTodo("")
 
     setSelectedDate("")
-
-  }
-
-  //The purpose of this function is to toggle the 'complete' variable and determine whether the todo is completed or not
-  function toggleComplete(id) {
-  
-    //Update todo will access the todo file and with the arrow function (=>) (which can be thought of as a "I've opened the file, what do you want to do with it")
-    const updateTodo = [...todos].map((todo) => {
-
-      //If the todo.id matches the id in the file, change the todo.completed to the opposite of what it currently is
-      if (todo.id === id) {
-        todo.completed = !todo.completed
-      }
-
-      //Return all changes to system (Kind of like pushing with git to github)
-      return todo
-    })
-
-    //The todos file will be updated to what has changed
-    setTodos(updateTodo)
 
   }
 
@@ -186,7 +165,7 @@ function App() {
       </form>
       
         {todos.map((todo) =>
-        <div className={todo.completed ? 'completed' : ''}
+        <div className={todo.overdue ? 'overdueText' : 'ontimeText'}
         key={todo.id}>
         
         {todoEditing === todo.id ? 
@@ -198,32 +177,32 @@ function App() {
         />
         ) 
           :
-          (<div className="todoText">{todo.text}</div>)}
+          (<div>{todo.text}</div>)}
 
         {todoEditing === todo.id ? 
         (<DatePicker
         placeholderText='Enter a date'
+        className='dateEdit'
         selected={editSelectedDate} 
         onChange={date => editSetSelectedDate(date)} 
         />)
         :
         (console.log())}
-        
-        {todoEditing === todo.id ?
-        (console.log) :
-        (<input 
-          type="checkbox"
-          className="isComplete" 
-          onChange ={() => toggleComplete(todo.id)}
-          checked={todo.completed} />)}
 
-        {todoEditing === todo.id ?
-        (console.log):
-        (<button className="delButton" onClick={() => deleteTodo(todo.id)}>Delete</button>)}
 
         {todoEditing === todo.id ? 
         (<button className="completeEdit" onClick={() => editTodo(todo.id)}>Complete Edit</button>) : 
-        (<button className="editTodo" onClick={() => setTodoEditing(todo.id)}>Edit</button>)}
+        console.log()}
+  
+        <div>
+          {todoEditing === todo.id ?
+            (console.log):
+            (<button className="delEdit" onClick={() => deleteTodo(todo.id)}>Done?</button>)}
+
+          {todoEditing === todo.id ?
+            (console.log):
+            (<button className="delEdit" onClick={() => setTodoEditing(todo.id)}>Edit</button>)}
+        </div>
 
       </div>)}
     </div>
