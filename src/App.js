@@ -28,12 +28,16 @@ function App() {
   //This is parsed into javascript from json which is how the todo file is stored and puts it into loadedTodos
   const loadedTodos = JSON.parse(temp)
 
+  //Assigns the date as the amount of milliseconds which has passed since 1st Jan 1970
   const current = new Date()
 
+  //Converts the above into a readable date in the form YY/M/D
   const today_date = `${current.getFullYear()}/${current.getMonth()+1}/${current.getDate()}`;
 
+  //Used to change the date in the create a todo function
   const [selectedDate, setSelectedDate] = React.useState(null)
 
+  //Used to change the date in the edit a todo function
   const [editSelectedDate, editSetSelectedDate] = React.useState(null)
 
   //Shows the user the todos upon reload of the page
@@ -47,101 +51,97 @@ function App() {
     localStorage.setItem("todos", temp)
   }, [todos])
 
-
+  //The purpose of this function is to check if a task is overdue
   function dueCheck(todo, newTodo) {
-    //Gets today's date and makes it an integer in the form YYYYMD
     
+    //Gets the current date and puts it in the format of YYYY/MM/DD
     var today = new Date();
     var dd = today.getDate();
 
     var mm = today.getMonth()+1; 
     var yyyy = today.getFullYear();
+    
+    //If the day is less than 10, add a 0 to the end of the day so the structure stays constant
     if(dd<10) 
     {
         dd='0'+dd;
     } 
 
+    //If the month is less than 10, add a 0 to the end of the month so the structure stays constant
     if(mm<10) 
     {
         mm='0'+mm;
     } 
 
+    //Adds the date into a single variable
     var nowDate = yyyy+mm+dd
 
     //Splits the date component of a todo into an array
-    
+    //The purpose of the if else statement is to differentiate whether the todo is being edited or a new todo as they are stored differently initally
     if (todo.text) {
       var tempTodo1 = todo.text
     } else {
       tempTodo1 = newTodo.text
     }
 
+    //The tempduedate is the due date assigned by the user and is retrieved from the function name as the date is after the '|'
     var tempDueDate = tempTodo1.substring(tempTodo1.indexOf("|"));
     tempDueDate = tempDueDate.split(" ")
 
+    //This variable is the day part of the date (as in the 21st or 16th)
     var temp1 = tempDueDate[3]
 
+    //Initalises the due date variable
     var dueDate = ""
 
+    //The switch statement allows for the month in the due date to be converted into number form (Like Jan to 01). This keeps the format constant
     switch (tempDueDate[2]) {
       case "Jan":
         dueDate = tempDueDate[4] + "01" + temp1
-        console.log(dueDate)
         break;
 
       case "Feb":
         dueDate = tempDueDate[4] + "02" + temp1
-        console.log(dueDate)
         break;
 
       case "Mar":
         dueDate = tempDueDate[4] + "03" + temp1
-        console.log(dueDate)
         break;
 
       case "Apr":
         dueDate = tempDueDate[4] + "04" + temp1
-        console.log(dueDate)
         break;
       
       case "May":
         dueDate = tempDueDate[4] + "05" + temp1
-        console.log(dueDate)
         break;
 
       case "Jun":
         dueDate = tempDueDate[4] + "06" + temp1
-        console.log(dueDate)
         break;
 
       case "Jul":
         dueDate = tempDueDate[4] + "07" + temp1
-        console.log(dueDate)
         break;
 
       case "Aug":
         dueDate = tempDueDate[4] + "08" + temp1
-        console.log(dueDate)
         break;
 
       case "Sep":
         dueDate = tempDueDate[4] + "09" + temp1
-        console.log(dueDate)
         break;
 
       case "Oct":
         dueDate = tempDueDate[4] + "10" + temp1
-        console.log(dueDate)
         break;
 
       case "Nov":
         dueDate = tempDueDate[4] + "11" + temp1
-        console.log(dueDate)
         break;
 
       case "Dec":
         dueDate = tempDueDate[4] + "12" + temp1
-        console.log(dueDate)
         break;
       
       default:
@@ -149,16 +149,17 @@ function App() {
         break;
     }
 
+    //This turns the dates into an integer so that they can be compared
     dueDate = parseInt(dueDate);
     nowDate = parseInt(nowDate);
 
+    //If the due date is less than the current date (which it will always be if the task is overdue) then task is overdue
     if (dueDate <= nowDate) {
         todo.overdue = true   
     } else {
         todo.overdue = false
     }
 
-    console.log(todo.text)
   }
 
   //This function is for adding todos and is triggered by the "add todo" button
@@ -166,10 +167,11 @@ function App() {
 
     //Stops the page from reloading every time a todo is added
     e.preventDefault()
-    //This function will remove the fluff that comes with the selectedDate function
-    
+
+    //This function turns the selected date into a string so that it can be manipulated by javascript
     var dueDate = selectedDate.toString()
     
+    ////This function will remove the fluff that comes with the selectedDate function and if there is no date, show no due date
     if (selectedDate) {
       dueDate = dueDate.replace("00:00:00 GMT+1000 (Australian Eastern Standard Time)","")
       dueDate = dueDate.replace("00:00:00 GMT+1100 (Australian Eastern Daylight Time)","")
@@ -186,8 +188,10 @@ function App() {
       overdue: false,
     }
 
+    //Initalisers the isCharacter bool
     var isCharacter = false;
 
+    //If the todo contains the character '|' as it is used in integral parts of the program, the todo can not be saved
     if (todo.includes("|")) {
       isCharacter = false
     } else {
@@ -195,17 +199,18 @@ function App() {
     }
 
     //This code stores the todo in file. The .concat allows for the new todo object to be added to the end of the file.
+    //The if statement checks if the todo is legal. If not it shows an error message
     if (todo && isCharacter) {
       setTodos([...todos].concat(newTodo))
     } else {
       window.alert("Invalid Input! Try enter a todo and avoid using the '|' character!");
     }
 
+    //Checks whether the todo is overdue or not
     dueCheck(newTodo)
 
     //This line resets the text box to be empty once a todo is added
     setTodo("")
-
     setSelectedDate("")
 
   }
@@ -216,8 +221,8 @@ function App() {
     //Const exists to access the todo file and update it with the edited changes
     const updateTodos = [...todos].map((todo) => {
 
-      //This if statement checks whether there is any edit in the edit todo textbox. If there is not, there will be no change
-      
+      //The todo.id === id is needed so that the correct todo gets its variables changed
+      //This if statement checks whether both the todo text and the date is changed in order to update
       if (editingText && editSelectedDate) {
         if (todo.id === id) {
           var dueDate1 = editSelectedDate.toString()
@@ -228,6 +233,7 @@ function App() {
           todo.text = modTodo1
         }
 
+      //This if statement checks if just the text has been changed in order to update without losing the due date
       } else if (editingText) {
           if (todo.id === id) {
             var tempTodo1 = todo.text
@@ -235,6 +241,8 @@ function App() {
             var modTodo2 = editingText + " " + todoDate
             todo.text = modTodo2
           }
+      
+      //This if statement checks if the due date has been changed in order to update without losing the task name
       } else if (editSelectedDate) {
           if (todo.id === id) {
             var tempTodo = todo.text
@@ -248,6 +256,7 @@ function App() {
           }
       }
 
+      //Checks if the todo is overdue.
       if (todo.id === id) {
         dueCheck(todo)
       }
