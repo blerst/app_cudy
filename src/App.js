@@ -47,16 +47,133 @@ function App() {
     localStorage.setItem("todos", temp)
   }, [todos])
 
+
+  function dueCheck(todo, newTodo) {
+    //Gets today's date and makes it an integer in the form YYYYMD
+    
+    var today = new Date();
+    var dd = today.getDate();
+
+    var mm = today.getMonth()+1; 
+    var yyyy = today.getFullYear();
+    if(dd<10) 
+    {
+        dd='0'+dd;
+    } 
+
+    if(mm<10) 
+    {
+        mm='0'+mm;
+    } 
+
+    var nowDate = yyyy+mm+dd
+
+    //Splits the date component of a todo into an array
+    
+    if (todo.text) {
+      var tempTodo1 = todo.text
+    } else {
+      tempTodo1 = newTodo.text
+    }
+
+    var tempDueDate = tempTodo1.substring(tempTodo1.indexOf("|"));
+    tempDueDate = tempDueDate.split(" ")
+
+    var temp1 = tempDueDate[3]
+
+    var dueDate = ""
+
+    switch (tempDueDate[2]) {
+      case "Jan":
+        dueDate = tempDueDate[4] + "01" + temp1
+        console.log(dueDate)
+        break;
+
+      case "Feb":
+        dueDate = tempDueDate[4] + "02" + temp1
+        console.log(dueDate)
+        break;
+
+      case "Mar":
+        dueDate = tempDueDate[4] + "03" + temp1
+        console.log(dueDate)
+        break;
+
+      case "Apr":
+        dueDate = tempDueDate[4] + "04" + temp1
+        console.log(dueDate)
+        break;
+      
+      case "May":
+        dueDate = tempDueDate[4] + "05" + temp1
+        console.log(dueDate)
+        break;
+
+      case "Jun":
+        dueDate = tempDueDate[4] + "06" + temp1
+        console.log(dueDate)
+        break;
+
+      case "Jul":
+        dueDate = tempDueDate[4] + "07" + temp1
+        console.log(dueDate)
+        break;
+
+      case "Aug":
+        dueDate = tempDueDate[4] + "08" + temp1
+        console.log(dueDate)
+        break;
+
+      case "Sep":
+        dueDate = tempDueDate[4] + "09" + temp1
+        console.log(dueDate)
+        break;
+
+      case "Oct":
+        dueDate = tempDueDate[4] + "10" + temp1
+        console.log(dueDate)
+        break;
+
+      case "Nov":
+        dueDate = tempDueDate[4] + "11" + temp1
+        console.log(dueDate)
+        break;
+
+      case "Dec":
+        dueDate = tempDueDate[4] + "12" + temp1
+        console.log(dueDate)
+        break;
+      
+      default:
+        console.log("brokey :(")
+        break;
+    }
+
+    dueDate = parseInt(dueDate);
+    nowDate = parseInt(nowDate);
+
+    if (dueDate <= nowDate) {
+        todo.overdue = true   
+    } else {
+        todo.overdue = false
+    }
+
+    console.log(todo.text)
+  }
+
   //This function is for adding todos and is triggered by the "add todo" button
   function handleSubmit(e) {
 
     //Stops the page from reloading every time a todo is added
     e.preventDefault()
-
     //This function will remove the fluff that comes with the selectedDate function
+    
+    var dueDate = selectedDate.toString()
+    
     if (selectedDate) {
-      var dueDate = selectedDate.toString()
       dueDate = dueDate.replace("00:00:00 GMT+1000 (Australian Eastern Standard Time)","")
+      dueDate = dueDate.replace("00:00:00 GMT+1100 (Australian Eastern Daylight Time)","")
+      dueDate = dueDate.replace("00:00:00 GMT+1000 (Australian Eastern Daylight Time)","")
     } else {
       dueDate = "No due date"
     }
@@ -66,13 +183,25 @@ function App() {
       id: Date.now(),
       text: todo + " | " + dueDate,
       editText: todo,
-      overdue: true,
+      overdue: false,
+    }
+
+    var isCharacter = false;
+
+    if (todo.includes("|")) {
+      isCharacter = false
+    } else {
+      isCharacter = true
     }
 
     //This code stores the todo in file. The .concat allows for the new todo object to be added to the end of the file.
-    if (todo) {
+    if (todo && isCharacter) {
       setTodos([...todos].concat(newTodo))
+    } else {
+      window.alert("Invalid Input! Try enter a todo and avoid using the '|' character!");
     }
+
+    dueCheck(newTodo)
 
     //This line resets the text box to be empty once a todo is added
     setTodo("")
@@ -85,7 +214,7 @@ function App() {
   function editTodo(id) {
 
     //Const exists to access the todo file and update it with the edited changes
-    const updateTodos = [... todos].map((todo) => {
+    const updateTodos = [...todos].map((todo) => {
 
       //This if statement checks whether there is any edit in the edit todo textbox. If there is not, there will be no change
       
@@ -93,6 +222,8 @@ function App() {
         if (todo.id === id) {
           var dueDate1 = editSelectedDate.toString()
           dueDate1 = dueDate1.replace("00:00:00 GMT+1000 (Australian Eastern Standard Time)","")
+          dueDate1 = dueDate1.replace("00:00:00 GMT+1100 (Australian Eastern Daylight Time)","")
+          dueDate1 = dueDate1.replace("00:00:00 GMT+1000 (Australian Eastern Daylight Time)","")
           var modTodo1 = editingText + " | " + dueDate1
           todo.text = modTodo1
         }
@@ -110,9 +241,15 @@ function App() {
             var tempText = tempTodo.substring(0, tempTodo.indexOf('|'));
             var dueDate2 = editSelectedDate.toString()
             dueDate2 = dueDate2.replace("00:00:00 GMT+1000 (Australian Eastern Standard Time)","")
+            dueDate2 = dueDate2.replace("00:00:00 GMT+1100 (Australian Eastern Daylight Time)","")
+            dueDate2 = dueDate2.replace("00:00:00 GMT+1000 (Australian Eastern Daylight Time)","")
             var modTodo3 = tempText + " | " + dueDate2
             todo.text = modTodo3
           }
+      }
+
+      if (todo.id === id) {
+        dueCheck(todo)
       }
 
       //Return all changes to system (Kind of like pushing with git to github)
@@ -156,7 +293,7 @@ function App() {
 
         <DatePicker 
         className='dateChoose'
-        placeholderText='Enter a date'
+        placeholderText='Enter a date in MM/DD/YY'
         selected={selectedDate} 
         onChange={date => setSelectedDate(date)} 
         />
@@ -181,7 +318,7 @@ function App() {
 
         {todoEditing === todo.id ? 
         (<DatePicker
-        placeholderText='Enter a date'
+        placeholderText='Enter a date in MM/DD/YY'
         className='dateEdit'
         selected={editSelectedDate} 
         onChange={date => editSetSelectedDate(date)} 
