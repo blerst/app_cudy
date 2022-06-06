@@ -3,6 +3,7 @@ import './App.css';
 import img1 from './images/cudy1.png';
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import Helpsys from './Helpsys.js'
 
 //Whenever you see <div>, I have commented around them the features about the div because you can't comment in a div.
 
@@ -315,6 +316,13 @@ function App() {
   return (
 
     <div className="App">
+
+      <div className='popup-box'>
+        <div className='box'>
+          <button className='btn-close'>x</button>
+          Test!
+        </div>
+      </div>
 
       <img src={img1} alt=''/>
 
