@@ -74,7 +74,6 @@ function App() {
         }
       }
     }
-
   }
 
   //The purpose of this function is to check if a task is overdue
@@ -197,7 +196,9 @@ function App() {
     e.preventDefault()
 
     //This function turns the selected date into a string so that it can be manipulated by javascript
-    var dueDate = selectedDate.toString()
+    if (selectedDate) {
+      var dueDate = selectedDate.toString()
+    }
     
     ////This function will remove the fluff that comes with the selectedDate function and if there is no date, show no due date
     if (selectedDate) {
@@ -237,8 +238,6 @@ function App() {
 
     //Checks whether the todo is overdue or not
     dueCheck(newTodo)
-
-    sortTodos()
 
     //This line resets the text box to be empty once a todo is added
     setTodo("")
@@ -338,7 +337,7 @@ function App() {
         onChange={date => setSelectedDate(date)} 
         />
 
-        <button type="submit" className="addTodo">Add Todo</button>
+        <button type="submit" className="addTodo" onClick={sortTodos()}>Add Todo</button>
       </form>
       
         {todos.map((todo) =>
