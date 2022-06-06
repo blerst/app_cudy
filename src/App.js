@@ -51,10 +51,10 @@ function App() {
     localStorage.setItem("todos", temp)
   }, [todos])
 
+  //Bubble sort for sorting all todos
   function sortTodos() {
 
-    for (var i = 0; i < todos.length; i++) {
-     
+    for (var i = 0; i < todos.length; i++) {     
       // Last i elements are already in place  
       for (var j = 0; j < ( todos.length - i -1 ); j++) {
 
@@ -63,8 +63,7 @@ function App() {
         var date2 = todos[j+1]
         date2 = date2.dateInt
           
-        // Checking if the item at present iteration 
-        // is greater than the next iteration
+        // Checking if the item at present iteration is greater than the next iteration
         if(date1 > date2){
             
           // If the condition is true then swap them
