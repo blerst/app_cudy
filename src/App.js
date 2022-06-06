@@ -32,7 +32,7 @@ function App() {
   const current = new Date()
 
   //Converts the above into a readable date in the form YY/M/D
-  const today_date = `${current.getFullYear()}/${current.getMonth()+1}/${current.getDate()}`;
+  const today_date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
 
   //Used to change the date in the create a todo function
   const [selectedDate, setSelectedDate] = React.useState(null)
@@ -51,9 +51,36 @@ function App() {
     localStorage.setItem("todos", temp)
   }, [todos])
 
+  function sortTodos() {
+
+    for (var i = 0; i < todos.length; i++) {
+     
+      // Last i elements are already in place  
+      for (var j = 0; j < ( todos.length - i -1 ); j++) {
+
+        var date1 = todos[j]
+        date1 = date1[1]
+
+          
+        // Checking if the item at present iteration 
+        // is greater than the next iteration
+        if(arr[j] > arr[j+1]){
+            
+          // If the condition is true then swap them
+          var temp = todos[j]
+          todos[j] = todos[j + 1]
+          todos[j+1] = temp
+        }
+      }
+    }
+    // Print the sorted array
+    console.log(todos);
+
+  }
+
   //The purpose of this function is to check if a task is overdue
   function dueCheck(todo, newTodo) {
-    
+
     //Gets the current date and puts it in the format of YYYY/MM/DD
     var today = new Date();
     var dd = today.getDate();
@@ -145,7 +172,7 @@ function App() {
         break;
       
       default:
-        console.log("brokey :(")
+
         break;
     }
 
@@ -159,6 +186,8 @@ function App() {
     } else {
         todo.overdue = false
     }
+
+    todo.dateInt = dueDate
 
   }
 
@@ -186,6 +215,7 @@ function App() {
       text: todo + " | " + dueDate,
       editText: todo,
       overdue: false,
+      dateInt: 0,
     }
 
     //Initalisers the isCharacter bool
@@ -208,6 +238,8 @@ function App() {
 
     //Checks whether the todo is overdue or not
     dueCheck(newTodo)
+
+    sortTodos()
 
     //This line resets the text box to be empty once a todo is added
     setTodo("")
@@ -343,7 +375,7 @@ function App() {
         <div>
           {todoEditing === todo.id ?
             (console.log):
-            (<button className="delEdit" onClick={() => deleteTodo(todo.id)}>Done?</button>)}
+            (<button className="delEdit" onClick={() => deleteTodo(todo.id)}>Remove</button>)}
 
           {todoEditing === todo.id ?
             (console.log):
