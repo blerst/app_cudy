@@ -59,12 +59,13 @@ function App() {
       for (var j = 0; j < ( todos.length - i -1 ); j++) {
 
         var date1 = todos[j]
-        date1 = date1[1]
-
+        date1 = date1.dateInt
+        var date2 = todos[j+1]
+        date2 = date2.dateInt
           
         // Checking if the item at present iteration 
         // is greater than the next iteration
-        if(arr[j] > arr[j+1]){
+        if(date1 > date2){
             
           // If the condition is true then swap them
           var temp = todos[j]
@@ -73,8 +74,6 @@ function App() {
         }
       }
     }
-    // Print the sorted array
-    console.log(todos);
 
   }
 
