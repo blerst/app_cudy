@@ -316,13 +316,8 @@ function App() {
   return (
 
     <div className="App">
-
-      <div className='popup-box'>
-        <div className='box'>
-          <button className='btn-close'>x</button>
-          Test!
-        </div>
-      </div>
+  
+      <Helpsys />
 
       <img src={img1} alt=''/>
 

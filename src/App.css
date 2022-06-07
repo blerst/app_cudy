@@ -163,3 +163,32 @@ img {
   color: #fff;
   text-transform: capitalize;
 }
+
+.popup-box {
+  position: fixed;
+  left: 0%;
+  right: 0%;
+  width: 100%;
+  height: 100%;
+}
+
+.box {
+  position: relative;
+  width: 50%;
+  min-height: 300px;
+  background-color: #c5c5c5;
+  border: 1px solid #999;
+  border-radius: 12px;
+  margin: 20px auto;
+  overflow: auto;
+}
+
+.btn-close {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border: 1px solid white;
+  border-radius: 50%;
+  position: fixed;
+  right: 25.11%;
+}

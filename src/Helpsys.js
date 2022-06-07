@@ -2,7 +2,6 @@ import React from 'react'
   
 function Helpsys() {
 
-  const Popup = props => {
   return (
     <div className='popup-box'>
       <div className='box'>
@@ -12,6 +11,5 @@ function Helpsys() {
     </div>
     )
   }
-}
 
 export default Helpsys;
