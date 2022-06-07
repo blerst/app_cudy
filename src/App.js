@@ -3,7 +3,7 @@ import './App.css';
 import img1 from './images/cudy1.png';
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import Helpsys from './Helpsys.js'
+import Modal from './components/Modal.js'
 
 //Whenever you see <div>, I have commented around them the features about the div because you can't comment in a div.
 
@@ -40,6 +40,9 @@ function App() {
 
   //Used to change the date in the edit a todo function
   const [editSelectedDate, editSetSelectedDate] = React.useState(null)
+
+  //Used to open inbuilt popup help menu
+  const [openModal, setOpenModal] = React.useState(false)
 
   //Shows the user the todos upon reload of the page
   React.useEffect(() => {
@@ -316,10 +319,13 @@ function App() {
   return (
 
     <div className="App">
-  
-      <Helpsys />
 
       <img src={img1} alt=''/>
+
+      <button className='openModalBtn' onClick={() => 
+        {setOpenModal(true);
+        }}>Need Help?</button>
+      {openModal && <Modal closeModal={setOpenModal}/>}
 
       <h4>The date today is <b>{today_date}</b></h4>
 
@@ -331,13 +337,18 @@ function App() {
           value={todo}
           placeholder='What do you need to do?'
           className="inputTodo"/>
-
+  
+        {openModal ? (
+          console.log()
+        ) 
+        : 
+        (
         <DatePicker 
-        className='dateChoose'
-        placeholderText='Enter a date in MM/DD/YY'
-        selected={selectedDate} 
-        onChange={date => setSelectedDate(date)} 
-        />
+          className='dateChoose'
+          placeholderText='Enter a date in MM/DD/YY'
+          selected={selectedDate} 
+          onChange={date => setSelectedDate(date)} 
+          />)}
 
         <button type="submit" className="addTodo" onClick={sortTodos()}>Add Todo</button>
       </form>
