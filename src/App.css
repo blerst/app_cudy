@@ -12,6 +12,7 @@ body {
     rgba(48, 16, 255, 1) 0%,
     rgb(255, 146, 100) 100%
   );
+  background-attachment: fixed;
 }
 
 h4 {
@@ -187,7 +188,7 @@ img {
   width: 20%;
   margin: auto;
   margin-top: 0%;
-  margin-bottom: 10%;
+  margin-bottom: 6.5%;
   background: linear-gradient(
     rgb(12, 109, 255) 0%,
     rgb(88, 174, 255) 100%

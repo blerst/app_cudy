@@ -63,17 +63,31 @@ function App() {
       for (var j = 0; j < ( todos.length - i -1 ); j++) {
 
         var date1 = todos[j]
-        date1 = date1.dateInt
+        
+        //This code exists to assign a dateInt value of 0 if there is no due date
+        if (date1.dateInt) {
+          date1 = date1.dateInt
+        } else {
+          date1 = 0
+        }
+
         var date2 = todos[j+1]
-        date2 = date2.dateInt
+
+        //This code exists to assign a dateInt value of 0 if there is no due date
+        if (date2.dateInt) {
+          date2 = date2.dateInt
+        } else {
+          date2 = 0
+        }
           
         // Checking if the item at present iteration is greater than the next iteration
-        if(date1 > date2){
+        if (date1 > date2) {
             
           // If the condition is true then swap them
           var temp = todos[j]
           todos[j] = todos[j + 1]
           todos[j+1] = temp
+
         }
       }
     }
@@ -201,7 +215,7 @@ function App() {
     //This function turns the selected date into a string so that it can be manipulated by javascript
     if (selectedDate) {
       var dueDate = selectedDate.toString()
-    }
+    } 
     
     ////This function will remove the fluff that comes with the selectedDate function and if there is no date, show no due date
     if (selectedDate) {
