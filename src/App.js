@@ -51,11 +51,13 @@ function App() {
 
   //This function allows for the local storage of todos
   React.useEffect(() => {
+    //Assigns a constant for the todos to be formatted in the JSON format (as that is how they must be stored)
     const temp = JSON.stringify(todos)
+    //Puts the json into local storage
     localStorage.setItem("todos", temp)
   }, [todos])
 
-  //Bubble sort for sorting all todos
+  //Bubble sort for sorting all todos (THIS IS A BASIC BUBBLE SORT NOTHING TOO FANCY)
   function sortTodos() {
 
     for (var i = 0; i < todos.length; i++) {     
@@ -219,6 +221,8 @@ function App() {
     
     ////This function will remove the fluff that comes with the selectedDate function and if there is no date, show no due date
     if (selectedDate) {
+
+      //The .replace function will replace any text in the string with what you want. In this case, the date fluff is replaced with nothing
       dueDate = dueDate.replace("00:00:00 GMT+1000 (Australian Eastern Standard Time)","")
       dueDate = dueDate.replace("00:00:00 GMT+1100 (Australian Eastern Daylight Time)","")
       dueDate = dueDate.replace("00:00:00 GMT+1000 (Australian Eastern Daylight Time)","")
@@ -235,7 +239,7 @@ function App() {
       dateInt: 0,
     }
 
-    //Initalisers the isCharacter bool
+    //Initalisers the isCharacter bool to check whether an invalid character is used
     var isCharacter = false;
 
     //If the todo contains the character '|' as it is used in integral parts of the program, the todo can not be saved
@@ -272,10 +276,17 @@ function App() {
       //This if statement checks whether both the todo text and the date is changed in order to update
       if (editingText && editSelectedDate) {
         if (todo.id === id) {
+
+          //The .toString transforms the due date selected by the user into a string so the value can be adjusted
           var dueDate1 = editSelectedDate.toString()
+
+          //The reason there are so many of the .replace is that due to ReactDatePicker being annoying, it changes the fluff each time
+          //This accounts for all cases where the text may be different to be certain that it will be removed.
           dueDate1 = dueDate1.replace("00:00:00 GMT+1000 (Australian Eastern Standard Time)","")
           dueDate1 = dueDate1.replace("00:00:00 GMT+1100 (Australian Eastern Daylight Time)","")
           dueDate1 = dueDate1.replace("00:00:00 GMT+1000 (Australian Eastern Daylight Time)","")
+          
+          //This code changes the format to be the same as when a todo is added (eg. "todo name" | "due date")
           var modTodo1 = editingText + " | " + dueDate1
           todo.text = modTodo1
         }
@@ -284,7 +295,11 @@ function App() {
       } else if (editingText) {
           if (todo.id === id) {
             var tempTodo1 = todo.text
+            
+            //Reads the date from after the | character
             var todoDate = tempTodo1.substring(tempTodo1.indexOf("|"));
+
+            //Puts the todo back together conserving only the date
             var modTodo2 = editingText + " " + todoDate
             todo.text = modTodo2
           }
