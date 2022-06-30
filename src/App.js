@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import './App.css';
 import img1 from './images/cudy1.png';
 import DatePicker from 'react-datepicker'
