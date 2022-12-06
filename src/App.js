@@ -7,6 +7,8 @@ import Modal from './components/Modal.js'
 
 //Whenever you see <div>, I have commented around them the features about the div because you can't comment in a div.
 
+//test
+
 function App() {
 
   //Hooks are functions that let you “hook into” React state and lifecycle features from function components. They allow you to use React without classes
